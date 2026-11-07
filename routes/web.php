@@ -1,21 +1,19 @@
 <?php
 
-<<<<<<< Updated upstream
-=======
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Bpbd\DashboardController as BpbdDashboardController;
-use App\Http\Controllers\LaporanPaceklikController;
 use App\Http\Controllers\Rt\DashboardController as RtDashboardController;
 use App\Http\Middleware\EnsureRole;
 use Illuminate\Support\Facades\Auth;
->>>>>>> Stashed changes
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Rt\LaporanController;
+
+
+//Tidak ada registrasi Akun BPBD dan Ketua RT dibuat lewat UserSeeder
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(LoginController::dashboardUrl(Auth::user()) ?? route('login'));
 });
-<<<<<<< Updated upstream
-=======
 
 //auth
 Route::get('/login', [LoginController::class, 'show'])->name('login');
@@ -42,11 +40,10 @@ Route::middleware(['auth', EnsureRole::class . ':rt'])
         Route::get('/', [RtDashboardController::class, 'index'])->name('dashboard');
     });
 
-//laporan paceklik (kedua role bisa akses)
-Route::middleware('auth')->group(function () {
-    Route::get('/laporan-paceklik', [LaporanPaceklikController::class, 'index'])
-        ->name('laporan-paceklik.index');
-    Route::post('/laporan-paceklik', [LaporanPaceklikController::class, 'store'])
-        ->name('laporan-paceklik.store');
-});
->>>>>>> Stashed changes
+Route::middleware(['auth', EnsureRole::class . ':rt'])
+    ->prefix('rt')
+    ->name('rt.')
+    ->group(function () {
+        Route::get('/', [RtDashboardController::class, 'index'])->name('dashboard');
+        Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
+    });

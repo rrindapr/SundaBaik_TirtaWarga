@@ -5,7 +5,6 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -48,11 +47,8 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Relasi: user memiliki banyak laporan paceklik.
-     */
-    public function laporanPacekliks(): HasMany
-    {
-        return $this->hasMany(LaporanPaceklik::class);
-    }
+    public function laporan()
+{
+    return $this->hasMany(LaporanPaceklik::class);
+}
 }
