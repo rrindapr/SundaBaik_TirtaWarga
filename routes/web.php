@@ -11,6 +11,9 @@ use App\Http\Controllers\Rt\LaporanController;
 
 //Tidak ada registrasi Akun BPBD dan Ketua RT dibuat lewat UserSeeder
 
+
+//Tidak ada registrasi Akun BPBD dan Ketua RT dibuat lewat UserSeeder
+
 Route::get('/', function () {
     return redirect(LoginController::dashboardUrl(Auth::user()) ?? route('login'));
 });
