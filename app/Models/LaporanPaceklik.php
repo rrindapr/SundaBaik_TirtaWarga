@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+<<<<<<< Updated upstream
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LaporanPaceklik extends Model
@@ -87,4 +88,14 @@ class LaporanPaceklik extends Model
     {
         return $this->belongsTo(User::class);
     }
+=======
+
+class LaporanPaceklik extends Model
+{
+    protected $table      = 'laporan_paceklik';
+    protected $primaryKey = 'laporan_id';
+    public $timestamps    = false;
+
+    protected $fillable = ['id_rt', 'alamat_lengkap', 'latitude', 'longitude', 'jumlah_terdampak'];
+>>>>>>> Stashed changes
 }

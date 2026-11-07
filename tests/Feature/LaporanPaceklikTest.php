@@ -5,13 +5,17 @@ namespace Tests\Feature;
 use App\Models\LaporanPaceklik;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+<<<<<<< Updated upstream
 use PHPUnit\Framework\Attributes\Test;
+=======
+>>>>>>> Stashed changes
 use Tests\TestCase;
 
 class LaporanPaceklikTest extends TestCase
 {
     use RefreshDatabase;
 
+<<<<<<< Updated upstream
     /**
      * Helper: buat user dengan role tertentu.
      */
@@ -240,3 +244,22 @@ class LaporanPaceklikTest extends TestCase
         $this->assertTrue($user->laporanPacekliks->contains($laporan));
     }
 }
+=======
+    public function test_laporan_tersimpan_ke_tabel(): void
+    {
+        $rt = User::factory()->create(['role' => 'rt']);
+
+        LaporanPaceklik::create([
+            'id_rt' => $rt->id,
+            'alamat_lengkap' => 'Jl. Antapani Lama No. 12',
+            'jumlah_terdampak' => 42,
+        ]);
+
+        $this->assertDatabaseHas('laporan_paceklik', [
+            'id_rt' => $rt->id,
+            'jumlah_terdampak' => 42,
+            'status_laporan' => 'Menunggu',
+        ]);
+    }
+}
+>>>>>>> Stashed changes
