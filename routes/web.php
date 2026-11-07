@@ -33,12 +33,7 @@ Route::middleware(['auth', EnsureRole::class . ':bpbd'])
     });
 
 //rt (hanya akun dengan role rt)
-Route::middleware(['auth', EnsureRole::class . ':rt'])
-    ->prefix('rt')
-    ->name('rt.')
-    ->group(function () {
-        Route::get('/', [RtDashboardController::class, 'index'])->name('dashboard');
-    });
+
 
 Route::middleware(['auth', EnsureRole::class . ':rt'])
     ->prefix('rt')
