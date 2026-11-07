@@ -6,6 +6,10 @@ use App\Http\Controllers\Rt\DashboardController as RtDashboardController;
 use App\Http\Middleware\EnsureRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Rt\LaporanController;
+
+
+//Tidak ada registrasi Akun BPBD dan Ketua RT dibuat lewat UserSeeder
 
 
 //Tidak ada registrasi Akun BPBD dan Ketua RT dibuat lewat UserSeeder
@@ -32,9 +36,12 @@ Route::middleware(['auth', EnsureRole::class . ':bpbd'])
     });
 
 //rt (hanya akun dengan role rt)
+
+
 Route::middleware(['auth', EnsureRole::class . ':rt'])
     ->prefix('rt')
     ->name('rt.')
     ->group(function () {
         Route::get('/', [RtDashboardController::class, 'index'])->name('dashboard');
+        Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
     });
