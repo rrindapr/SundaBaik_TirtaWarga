@@ -236,3 +236,32 @@ table.data tr:last-child td { border-bottom: 0; }
     .donut-wrap { margin-top: 16px; }
     .split .card[style] { margin-top: 0 !important; }
 }
+
+.empty { margin-top: 32px; padding: 48px 32px; text-align: center; border: 1.5px dashed var(--line); border-radius: 14px; }
+.empty .ico { width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 14px; background: var(--chip); display: grid; place-items: center; color: var(--brand); }
+.empty h2 { margin: 0 0 6px; font-size: 20px; }
+.empty p { margin: 0 auto; max-width: 520px; color: var(--muted); }
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 16px; font-size: 14px; color: var(--muted); }
+.pager-links { display: flex; align-items: center; gap: 6px; }
+.pager-links a, .pager-links span { padding: 8px 12px; border-radius: 8px; }
+.pager-links a { color: var(--ink-2); font-weight: 600; background: var(--chip); }
+.pager-links a:hover { color: var(--ink); background: var(--line); }
+.pager-links .disabled { color: var(--line); }
+.pager-links .current { color: var(--ink); font-weight: 600; }
+/* PBI-05 */
+.link { color: var(--brand); font-weight: 600; font-size: 14px; }
+.link:hover { color: var(--brand-ink); text-decoration: underline; }
+.link-strong { font-weight: 700; color: var(--ink); }
+.link-strong:hover { color: var(--brand); text-decoration: underline; }
+.back-link { display: inline-block; margin-bottom: 18px; color: var(--muted); font-size: 14px; font-weight: 600; }
+.back-link:hover { color: var(--ink); }
+.detail-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 18px 0 0; }
+.detail-grid > div { padding: 18px 22px; border-bottom: 1px solid var(--line-2); }
+.detail-grid > div.wide { grid-column: 1 / -1; }
+.detail-grid > div:last-child { border-bottom: 0; }
+.detail-grid dt { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+.detail-grid dd { margin: 0; font-size: 15px; }
+
+@media (max-width: 900px) {
+    .detail-grid { grid-template-columns: 1fr 1fr; }
+}
