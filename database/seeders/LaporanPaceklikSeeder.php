@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\LaporanPaceklik;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class LaporanPaceklikSeeder extends Seeder
 {
@@ -44,10 +45,15 @@ class LaporanPaceklikSeeder extends Seeder
                 ]
             );
 
-            // created_at dipakai sebagai tanggal lapor
+            // created_at dipakai sebagai tanggal lapor.
+            // Waktu verifikasi dan selesai diisi sesuai status, untuk garis waktu di halaman detail (PBI-05).
+            $reportedAt = Carbon::parse($data['tanggal']);
+
             $laporan->forceFill([
-                'created_at' => $data['tanggal'],
-                'updated_at' => $data['tanggal'],
+                'created_at'      => $reportedAt,
+                'updated_at'      => $reportedAt,
+                'diverifikasi_at' => $data['status'] >= 2 ? $reportedAt->copy()->addHours(11) : null,
+                'selesai_at'      => $data['status'] >= 3 ? $reportedAt->copy()->addDay() : null,
             ])->save();
         }
     }

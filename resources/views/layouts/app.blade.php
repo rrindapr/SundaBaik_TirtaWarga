@@ -16,6 +16,7 @@
     $isBpbd = $user->role === 'bpbd';
 
     // 'route': null artinya halaman belum dibuat (link sementara '#').
+    // 'active': daftar nama route yang membuat menu ini tertandai aktif (opsional).
     $menu = $isBpbd
         ? [
             ['label' => 'Ringkasan',             'route' => 'bpbd.dashboard', 'icon' => 'grid'],
@@ -27,7 +28,7 @@
         : [
             ['label' => 'Ringkasan',       'route' => 'rt.dashboard',     'icon' => 'grid'],
             ['label' => 'Kirim Laporan',   'route' => null,               'icon' => 'send'],
-            ['label' => 'Riwayat Laporan', 'route' => 'rt.laporan.index', 'icon' => 'list'],
+            ['label' => 'Riwayat Laporan', 'route' => 'rt.laporan.index', 'icon' => 'list', 'active' => ['rt.laporan.index', 'rt.laporan.show']],
             ['label' => 'Notifikasi',      'route' => null,               'icon' => 'bell', 'badge' => 2],
         ];
 
@@ -52,7 +53,7 @@
 
         <nav class="nav">
             @foreach ($menu as $item)
-                <a href="{{ $item['route'] ? route($item['route']) : '#' }}" class="{{ $item['route'] && request()->routeIs($item['route']) ? 'active' : '' }}">
+                <a href="{{ $item['route'] ? route($item['route']) : '#' }}" class="{{ $item['route'] && request()->routeIs(...(array) ($item['active'] ?? $item['route'])) ? 'active' : '' }}">
                     @include('partials.icon', ['name' => $item['icon']])
                     {{ $item['label'] }}
                     @if (! empty($item['badge']))

@@ -33,12 +33,13 @@
                         <th>Alamat</th>
                         <th>Terdampak</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($reports as $report)
                         <tr>
-                            <td class="mono"><strong>{{ $report->kode }}</strong></td>
+                            <td class="mono"><a href="{{ route('rt.laporan.show', $report->kode) }}" class="link-strong">{{ $report->kode }}</a></td>
                             <td class="mono">{{ $report->created_at->format('d/m/Y H.i') }}</td>
                             <td>{{ $report->alamat }}</td>
                             <td class="mono">{{ $report->jumlah_kk_terdampak }} KK</td>
@@ -47,6 +48,7 @@
                                     {{ $statusLabels[$report->status] ?? 'Tidak diketahui' }}
                                 </span>
                             </td>
+                            <td><a href="{{ route('rt.laporan.show', $report->kode) }}" class="link">Lihat detail ›</a></td>
                         </tr>
                     @endforeach
                 </tbody>
