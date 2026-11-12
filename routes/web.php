@@ -43,5 +43,6 @@ Route::middleware(['auth', EnsureRole::class . ':rt'])
     ->name('rt.')
     ->group(function () {
         Route::get('/', [RtDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
     });

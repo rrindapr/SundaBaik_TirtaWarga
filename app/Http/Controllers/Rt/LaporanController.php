@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLaporanRequest;
 use App\Models\LaporanPaceklik;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class LaporanController extends Controller
 {
+    public function index(Request $request)
+    {
+        $reports = $request->user()
+            ->laporan()
+            ->latest()
+            ->paginate(10);
+
+        return view('rt.laporan.index', compact('reports'));
+    }
+
     public function store(StoreLaporanRequest $request)
     {
         $laporan = DB::transaction(function () use ($request) {
