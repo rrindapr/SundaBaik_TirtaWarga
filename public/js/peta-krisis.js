@@ -1,5 +1,5 @@
 // PBI-16: peta dasar (Leaflet + OpenStreetMap).
-// Objek peta disimpan di window.TirtaPeta untuk dipakai PBI-17 (titik) dan PBI-18 (heatmap).
+// PBI-17: titik lokasi laporan. PBI-18 (heatmap) bisa memakai window.TirtaPeta.
 (function () {
     'use strict';
 
@@ -12,13 +12,60 @@
         if (fallback) fallback.hidden = false;
     }
 
+    // PBI-17: warna titik menurut tingkat keparahan
+    var WARNA = { Kritis: '#e5484d', Sedang: '#f5a623', Rendah: '#4c9a5f' };
+
+    // Popup dibuat dengan DOM (textContent) agar alamat dari pengguna tidak bisa menyisipkan HTML.
+    function buatBaris(label, nilai) {
+        var p = document.createElement('div');
+        p.className = 'peta-popup-row';
+        var l = document.createElement('span');
+        l.textContent = label;
+        var v = document.createElement('b');
+        v.textContent = nilai;
+        p.appendChild(l);
+        p.appendChild(v);
+        return p;
+    }
+
+    function buatPopup(t) {
+        var box = document.createElement('div');
+        box.className = 'peta-popup';
+
+        var judul = document.createElement('strong');
+        judul.textContent = t.kode;
+        box.appendChild(judul);
+
+        var alamat = document.createElement('p');
+        alamat.textContent = t.alamat;
+        box.appendChild(alamat);
+
+        box.appendChild(buatBaris('Terdampak', t.kk + ' KK'));
+        box.appendChild(buatBaris('Keparahan', t.tingkat));
+        box.appendChild(buatBaris('Status', t.ditetapkan ? 'Ditetapkan' : t.status));
+
+        if (window.PETA_URL_LAPORAN) {
+            var a = document.createElement('a');
+            a.href = window.PETA_URL_LAPORAN;
+            a.textContent = 'Buka Laporan Masuk';
+            box.appendChild(a);
+        }
+        return box;
+    }
+
     try {
         if (typeof L === 'undefined') {
-            tampilkanFallback('Leaflet (L) tidak ter-load. Cek path vendor/leaflet/leaflet.js');
+            tampilkanFallback('Leaflet (L) tidak ter-load. Cek tag script Leaflet di view.');
             return;
         }
 
         var cfg = JSON.parse(document.getElementById('petaConfig').textContent);
+        var titik = [];
+        try {
+            titik = JSON.parse(document.getElementById('petaTitik').textContent) || [];
+        } catch (e) {
+            console.error('[Peta Krisis] data titik tidak valid', e);
+        }
 
         var map = L.map(el, {
             center: cfg.center,
@@ -41,8 +88,38 @@
 
         peta.addTo(map);
 
-        L.control.layers({ 'Peta': peta, 'Satelit': satelit }, null, { position: 'topright' }).addTo(map);
+        // PBI-17: layer titik lokasi laporan
+        var layerTitik = L.featureGroup();
+        titik.forEach(function (t) {
+            var marker = L.circleMarker([t.lat, t.lng], {
+                radius: 10,
+                color: t.ditetapkan ? '#1d4fa3' : '#ffffff',
+                weight: t.ditetapkan ? 4 : 2,
+                fillColor: WARNA[t.tingkat] || WARNA.Sedang,
+                fillOpacity: 0.9
+            });
+            marker.bindPopup(buatPopup(t));
+            marker.bindTooltip(t.kode);
+            marker.addTo(layerTitik);
+        });
+        layerTitik.addTo(map);
+
+        L.control.layers(
+            { 'Peta': peta, 'Satelit': satelit },
+            { 'Titik laporan': layerTitik },
+            { position: 'topright' }
+        ).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
+
+        // Arahkan tampilan awal ke seluruh titik; tanpa titik, tetap di pusat Bandung
+        function tampilanAwal() {
+            if (titik.length > 0) {
+                map.fitBounds(layerTitik.getBounds().pad(0.2), { maxZoom: 15 });
+            } else {
+                map.setView(cfg.center, cfg.zoom);
+            }
+        }
+        tampilanAwal();
 
         var ResetControl = L.Control.extend({
             options: { position: 'topleft' },
@@ -51,9 +128,7 @@
                 btn.type = 'button';
                 btn.textContent = 'Reset tampilan';
                 L.DomEvent.disableClickPropagation(btn);
-                L.DomEvent.on(btn, 'click', function () {
-                    map.setView(cfg.center, cfg.zoom);
-                });
+                L.DomEvent.on(btn, 'click', tampilanAwal);
                 return btn;
             }
         });
@@ -71,14 +146,14 @@
             if (fallback) fallback.hidden = true;
         });
 
-        // pastikan ukuran peta dihitung ulang setelah layout selesai
         setTimeout(function () { map.invalidateSize(); }, 200);
         window.addEventListener('load', function () { map.invalidateSize(); });
 
         window.TirtaPeta = {
             map: map,
             config: cfg,
-            layers: { peta: peta, satelit: satelit }
+            data: titik,
+            layers: { peta: peta, satelit: satelit, titik: layerTitik }
         };
     } catch (e) {
         tampilkanFallback(e);

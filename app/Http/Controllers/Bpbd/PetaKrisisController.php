@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LaporanPaceklik;
 use Illuminate\View\View;
 
-//PBI-16: peta dasar untuk memantau wilayah krisis air (dashboard BPBD)
+//PBI-16: peta dasar | PBI-17: titik lokasi laporan di peta
 class PetaKrisisController extends Controller
 {
     // Pusat peta: Kota Bandung
@@ -24,8 +24,30 @@ class PetaKrisisController extends Controller
             'bounds'  => [[-7.25, 107.35], [-6.70, 107.90]],
         ];
 
-        $totalLaporan = LaporanPaceklik::count();
+        $laporan = LaporanPaceklik::with('penetapanAktif')->get();
 
-        return view('bpbd.peta.index', compact('petaConfig', 'totalLaporan'));
+        // PBI-17: hanya laporan yang punya koordinat yang bisa digambar sebagai titik
+        $titikLaporan = $laporan
+            ->filter(fn ($l) => $l->latitude !== null && $l->longitude !== null)
+            ->map(fn ($l) => [
+                'id'         => $l->id,
+                'kode'       => $l->kode,
+                'alamat'     => $l->alamat,
+                'kk'         => (int) $l->jumlah_kk_terdampak,
+                'tingkat'    => $l->tingkat_keparahan ?? 'Sedang',
+                'status'     => LaporanPaceklik::STATUS_LABELS[$l->status] ?? 'Tidak diketahui',
+                'ditetapkan' => $l->penetapanAktif !== null,
+                'lat'        => (float) $l->latitude,
+                'lng'        => (float) $l->longitude,
+            ])
+            ->values();
+
+        $totalLaporan   = $laporan->count();
+        $tanpaKoordinat = $totalLaporan - $titikLaporan->count();
+        $urlLaporan     = route('bpbd.laporan.index');
+
+        return view('bpbd.peta.index', compact(
+            'petaConfig', 'titikLaporan', 'totalLaporan', 'tanpaKoordinat', 'urlLaporan'
+        ));
     }
 }
