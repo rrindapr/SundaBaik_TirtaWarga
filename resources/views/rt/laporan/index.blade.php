@@ -14,7 +14,7 @@
             <h1 class="page-title">Riwayat Laporan</h1>
             <p class="page-sub">Semua laporan paceklik air yang pernah Anda kirim beserta statusnya.</p>
         </div>
-        <a href="#" class="btn-primary">@include('partials.icon', ['name' => 'plus']) Kirim Laporan</a>
+        <a href="{{ route('rt.laporan.create') }}" class="btn-primary">@include('partials.icon', ['name' => 'plus']) Kirim Laporan</a>
     </div>
 
     @if ($reports->isEmpty())
