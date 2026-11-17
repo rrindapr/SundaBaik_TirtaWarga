@@ -104,7 +104,7 @@
         });
         layerTitik.addTo(map);
 
-        L.control.layers(
+       var layerControl = L.control.layers(
             { 'Peta': peta, 'Satelit': satelit },
             { 'Titik laporan': layerTitik },
             { position: 'topright' }
@@ -153,7 +153,8 @@
             map: map,
             config: cfg,
             data: titik,
-            layers: { peta: peta, satelit: satelit, titik: layerTitik }
+           layers: { peta: peta, satelit: satelit, titik: layerTitik },
+            control: layerControl // PBI-18: dipakai peta-heatmap.js untuk menambah checkbox layer
         };
     } catch (e) {
         tampilkanFallback(e);

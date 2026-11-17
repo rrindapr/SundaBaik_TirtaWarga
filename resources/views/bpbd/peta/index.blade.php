@@ -5,6 +5,7 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}">
     <link rel="stylesheet" href="{{ asset('css/peta-krisis.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/peta-heatmap.css') }}">
 
     <div class="page-head">
         <div>
@@ -36,10 +37,17 @@
         <span><i class="dot rendah"></i> Rendah</span>
         <span><i class="dot ring"></i> Sudah ditetapkan penerima bantuan</span>
     </div>
+    {{-- PBI-18: legenda heatmap jumlah warga (KK) terdampak --}}
+    <div class="peta-heat-legend" id="petaHeatLegend">
+        <strong>Heatmap warga terdampak</strong>
+        <div class="peta-heat-bar" id="petaHeatBar"></div>
+        <div class="peta-heat-scale"><span>Sedikit</span><span id="petaHeatMax">-</span></div>
+    </div>
 
     <script type="application/json" id="petaConfig">@json($petaConfig)</script>
     <script type="application/json" id="petaTitik">@json($titikLaporan)</script>
     <script>window.PETA_URL_LAPORAN = @json($urlLaporan);</script>
     <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
     <script src="{{ asset('js/peta-krisis.js') }}"></script>
+    <script src="{{ asset('js/peta-heatmap.js') }}"></script>
 @endsection
