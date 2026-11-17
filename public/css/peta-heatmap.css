@@ -1,0 +1,11 @@
+/* PBI-18: legenda & canvas heatmap. Memakai variabel dari tirtawarga.css */
+.peta-heat-canvas { position: absolute; top: 0; left: 0; pointer-events: none; }
+
+.peta-heat-legend {
+    margin-top: 14px; max-width: 360px;
+    color: var(--ink-2); font-size: 14px;
+}
+.peta-heat-legend[hidden] { display: none; }
+.peta-heat-legend strong { display: block; margin-bottom: 6px; color: var(--ink); font-size: 14px; }
+.peta-heat-bar { height: 12px; border-radius: 6px; box-shadow: 0 0 0 1px var(--line); }
+.peta-heat-scale { display: flex; justify-content: space-between; margin-top: 4px; font-size: 12px; color: var(--muted); }
