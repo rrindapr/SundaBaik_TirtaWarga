@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LaporanPaceklik extends Model
 {
-        use HasFactory, \App\Models\Concerns\GeneratesKodeLaporan, \App\Models\Concerns\SetStatusAwalLaporan;
+            use HasFactory, \App\Models\Concerns\GeneratesKodeLaporan, \App\Models\Concerns\SetStatusAwalLaporan, \App\Models\Concerns\CatatLogStatusLaporan;
 
     public const STATUS_LABELS = [
         1 => 'Menunggu',
