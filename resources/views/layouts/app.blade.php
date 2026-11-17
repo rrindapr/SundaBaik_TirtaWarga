@@ -19,7 +19,7 @@
         ? [
             ['label' => 'Ringkasan',             'route' => 'bpbd.dashboard',     'icon' => 'grid'],
                         ['label' => 'Laporan Masuk',         'route' => 'bpbd.laporan.index', 'icon' => 'inbox', 'badge' => $incomingReportCount ?? 0],
-            ['label' => 'Peta Krisis',           'route' => null,                 'icon' => 'map'],
+           ['label' => 'Peta Krisis',           'route' => 'bpbd.peta.index',    'icon' => 'map'],
             ['label' => 'Penetapan Bantuan',     'route' => null,                 'icon' => 'flag'],
             ['label' => 'Verifikasi Pengiriman', 'route' => null,                 'icon' => 'check'],
         ]
