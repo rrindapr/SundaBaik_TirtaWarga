@@ -40,7 +40,8 @@
                     @foreach ($reports as $report)
                         <tr>
                             <td class="mono"><a href="{{ route('rt.laporan.show', $report->kode) }}" class="link-strong">{{ $report->kode }}</a></td>
-                            <td class="mono">{{ $report->created_at->format('d/m/Y H.i') }}</td>
+                            {{-- PBI-11: tanggal lapor memakai kolom tanggal_lapor --}}
+                            <td class="mono">{{ $report->tanggal_lapor->format('d/m/Y H.i') }}</td>
                             <td>{{ $report->alamat }}</td>
                             <td class="mono">{{ $report->jumlah_kk_terdampak }} KK</td>
                             <td>

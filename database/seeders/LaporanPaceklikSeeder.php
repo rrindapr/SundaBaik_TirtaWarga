@@ -46,11 +46,13 @@ class LaporanPaceklikSeeder extends Seeder
                 ]
             );
 
-            // created_at dipakai sebagai tanggal lapor.
+            // tanggal_lapor (PBI-11) dan created_at diisi sama dengan tanggal seed,
+            // supaya data dummy tidak memakai waktu saat seeding dijalankan.
             // Waktu verifikasi dan selesai diisi sesuai status, untuk garis waktu di halaman detail (PBI-05).
             $reportedAt = Carbon::parse($data['tanggal']);
 
             $laporan->forceFill([
+                'tanggal_lapor'   => $reportedAt,
                 'created_at'      => $reportedAt,
                 'updated_at'      => $reportedAt,
                 'diverifikasi_at' => $data['status'] >= 2 ? $reportedAt->copy()->addHours(11) : null,
