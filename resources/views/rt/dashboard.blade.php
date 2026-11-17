@@ -13,7 +13,7 @@
             <h1 class="page-title">Halo, {{ auth()->user()->name }}</h1>
             <p class="page-sub">Kirim laporan paceklik air dan pantau tindak lanjutnya dari BPBD.</p>
         </div>
-        <a href="#" class="btn-primary">@include('partials.icon', ['name' => 'plus']) Kirim Laporan</a>
+        <a href="{{ route('rt.laporan.create') }}" class="btn-primary">@include('partials.icon', ['name' => 'plus']) Kirim Laporan</a>
     </div>
 
     <nav class="tabs">

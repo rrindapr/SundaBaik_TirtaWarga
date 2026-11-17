@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
+        /**
+     * PBI-01: tampilkan form isian alamat dan jumlah terdampak.
+     * Penyimpanan ditangani store() (PBI-10), validasi oleh StoreLaporanRequest (PBI-02).
+     */
+    public function create()
+    {
+        return view('rt.laporan.create');
+    }
     /**
      * PBI-04: daftar riwayat laporan milik Ketua RT yang sedang login.
      * Hanya laporan miliknya sendiri yang ditampilkan, terbaru di atas.
