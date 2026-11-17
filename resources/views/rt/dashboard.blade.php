@@ -15,6 +15,9 @@
         </div>
         <a href="{{ route('rt.laporan.create') }}" class="btn-primary">@include('partials.icon', ['name' => 'plus']) Kirim Laporan</a>
     </div>
+  {{-- PBI-03: konfirmasi laporan berhasil dikirim --}}
+  
+    @include('partials.laporan-flash')
 
     <nav class="tabs">
         <a href="#" class="active">Ringkasan</a>

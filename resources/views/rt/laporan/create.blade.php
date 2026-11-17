@@ -18,7 +18,8 @@
             <p class="page-sub">Isi alamat wilayah dan jumlah KK yang terdampak. Laporan langsung diteruskan ke BPBD tanpa perlu mengantar berkas.</p>
         </div>
     </div>
-
+{{-- PBI-03: pesan gagal kirim (isian dipertahankan lewat old()) --}}
+    @include('partials.laporan-flash')
     <div class="card report-form">
         @if ($errors->any())
             <div class="alert err" role="alert">
@@ -115,6 +116,19 @@
                     alamat.value = '';
                     alamat.reportValidity();
                 }
+            });
+                        // PBI-03: cegah kirim ganda (klik dua kali) selama permintaan diproses.
+            var form = document.getElementById('form-laporan');
+            var tombolKirim = form.querySelector('button[type="submit"]');
+            form.addEventListener('submit', function (e) {
+                if (e.defaultPrevented) return; // validasi browser / spasi saja sudah menolak
+                tombolKirim.disabled = true;
+                tombolKirim.setAttribute('aria-busy', 'true');
+            });
+            // Tombol aktif lagi kalau pengguna menekan Back ke halaman ini.
+            window.addEventListener('pageshow', function () {
+                tombolKirim.disabled = false;
+                tombolKirim.removeAttribute('aria-busy');
             });
         })();
     </script>

@@ -1,0 +1,44 @@
+/* PBI-03: banner konfirmasi laporan terkirim (Ketua RT).
+   File terpisah supaya tidak bentrok dengan tirtawarga.css yang diedit banyak orang. */
+.konfirmasi {
+    display: flex; gap: 18px; align-items: flex-start;
+    margin-top: 24px; padding: 20px 22px;
+    border: 1px solid var(--st-done-ink); border-radius: 12px;
+    background: var(--st-done-bg);
+}
+.konfirmasi-ico {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--st-done-ink); color: #fff;
+}
+.konfirmasi-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.konfirmasi-body { flex: 1; min-width: 0; }
+.konfirmasi-body h2 { margin: 0 0 4px; font-size: 18px; color: var(--st-done-ink); }
+.konfirmasi-body p { margin: 0; font-size: 14px; color: var(--ink-2); }
+
+.konfirmasi-data {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
+    margin: 18px 0 0; padding: 16px 18px;
+    background: var(--surface); border-radius: 10px;
+}
+.konfirmasi-data dt { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+.konfirmasi-data dd { margin: 0; font-size: 15px; color: var(--ink); }
+.konfirmasi-kode { font-weight: 800; font-size: 16px; }
+
+.konfirmasi-salin {
+    margin-left: 8px; padding: 2px 8px; border-radius: 6px;
+    border: 1px solid var(--line); background: var(--surface);
+    font: inherit; font-size: 12px; font-weight: 600; color: var(--brand); cursor: pointer;
+}
+.konfirmasi-salin:hover { background: var(--chip); }
+
+.konfirmasi-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.konfirmasi-actions .btn-primary,
+.konfirmasi-actions .btn-ghost { display: inline-flex; align-items: center; text-decoration: none; }
+
+@media (max-width: 900px) {
+    .konfirmasi { flex-direction: column; padding: 18px; }
+    .konfirmasi-data { grid-template-columns: 1fr 1fr; }
+    .konfirmasi-actions > * { flex: 1 1 100%; justify-content: center; }
+}
