@@ -41,3 +41,8 @@ Route::middleware(['auth', EnsureRole::class . ':rt'])
         Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
         Route::get('/laporan/{laporan:kode}', [LaporanController::class, 'show'])->name('laporan.show');   // PBI-05
     });
+
+use App\Http\Controllers\PenetapanBantuanController;
+
+Route::get('/dashboard-bpbd', [PenetapanBantuanController::class, 'index'])->name('bpbd.dashboard');
+Route::post('/penetapan-bantuan', [PenetapanBantuanController::class, 'store'])->name('bpbd.penetapan.store');
