@@ -33,6 +33,10 @@ class LaporanController extends Controller
         return view('rt.laporan.show', ['report' => $laporan]);
     }
 
+    /**
+     * PBI-10: simpan laporan baru.
+     * PBI-08: kode laporan dibuat otomatis oleh model (lihat trait GeneratesKodeLaporan).
+     */
     public function store(StoreLaporanRequest $request)
     {
         // Kalau dua laporan masuk bersamaan dan kodenya kembar, database menolak yang kedua
