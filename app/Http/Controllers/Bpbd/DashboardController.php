@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\bpbd;
+namespace App\Http\Controllers\Bpbd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

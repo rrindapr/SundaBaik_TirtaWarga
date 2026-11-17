@@ -15,15 +15,13 @@
     $user = auth()->user();
     $isBpbd = $user->role === 'bpbd';
 
-    // 'route': null artinya halaman belum dibuat (link sementara '#').
-    // 'active': daftar nama route yang membuat menu ini tertandai aktif (opsional).
     $menu = $isBpbd
         ? [
-            ['label' => 'Ringkasan',             'route' => 'bpbd.dashboard', 'icon' => 'grid'],
-            ['label' => 'Laporan Masuk',         'route' => null,             'icon' => 'inbox', 'badge' => 14],
-            ['label' => 'Peta Krisis',           'route' => null,             'icon' => 'map'],
-            ['label' => 'Penetapan Bantuan',     'route' => null,             'icon' => 'flag'],
-            ['label' => 'Verifikasi Pengiriman', 'route' => null,             'icon' => 'check'],
+            ['label' => 'Ringkasan',             'route' => 'bpbd.dashboard',     'icon' => 'grid'],
+            ['label' => 'Laporan Masuk',         'route' => 'bpbd.laporan.index', 'icon' => 'inbox'],
+            ['label' => 'Peta Krisis',           'route' => null,                 'icon' => 'map'],
+            ['label' => 'Penetapan Bantuan',     'route' => null,                 'icon' => 'flag'],
+            ['label' => 'Verifikasi Pengiriman', 'route' => null,                 'icon' => 'check'],
         ]
         : [
             ['label' => 'Ringkasan',       'route' => 'rt.dashboard',     'icon' => 'grid'],
