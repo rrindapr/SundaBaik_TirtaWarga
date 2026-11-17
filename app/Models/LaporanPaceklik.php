@@ -19,6 +19,7 @@ class LaporanPaceklik extends Model
     ];
 
     protected $table = 'laporan_paceklik';
+    use \App\Models\Concerns\CatatTanggalLapor;
 
     protected $fillable = [
         'kode',

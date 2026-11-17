@@ -9,8 +9,9 @@
         $statusClasses = [1 => 'menunggu', 2 => 'diverifikasi', 3 => 'selesai'];
 
         // Tahapan penanganan laporan, diambil dari kolom waktu di tabel.
+        // PBI-11: waktu "Laporan dikirim" memakai kolom tanggal_lapor.
         $timeline = [
-            ['title' => 'Laporan dikirim',   'time' => $report->created_at],
+            ['title' => 'Laporan dikirim',   'time' => $report->tanggal_lapor],
             ['title' => 'Diverifikasi BPBD', 'time' => $report->diverifikasi_at],
             ['title' => 'Bantuan selesai',   'time' => $report->selesai_at],
         ];
@@ -25,7 +26,8 @@
     <div class="page-head">
         <div>
             <h1 class="page-title">{{ $report->kode }}</h1>
-            <p class="page-sub">Dikirim {{ $report->created_at->format('d/m/Y H.i') }}</p>
+            {{-- PBI-11 --}}
+            <p class="page-sub">Dikirim {{ $report->tanggal_lapor->format('d/m/Y H.i') }}</p>
         </div>
         <span class="pill {{ $statusClasses[$report->status] ?? '' }}">
             {{ $statusLabels[$report->status] ?? 'Tidak diketahui' }}
@@ -70,7 +72,8 @@
             </div>
             <div>
                 <dt>Tanggal Lapor</dt>
-                <dd class="mono">{{ $report->created_at->format('d/m/Y H.i') }}</dd>
+                {{-- PBI-11 --}}
+                <dd class="mono">{{ $report->tanggal_lapor->format('d/m/Y H.i') }}</dd>
             </div>
             <div>
                 <dt>Jumlah Terdampak</dt>

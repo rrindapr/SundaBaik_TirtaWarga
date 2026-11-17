@@ -61,7 +61,8 @@
                             <td>
                                 <div class="cell-stack">
                                     {{ $reporterName }}
-                                    <small class="mono">{{ $row->created_at->format('d/m/Y H.i') }}</small>
+                                    {{-- PBI-11: tanggal lapor memakai kolom tanggal_lapor --}}
+                                    <small class="mono">{{ $row->tanggal_lapor->format('d/m/Y H.i') }}</small>
                                 </div>
                             </td>
                             <td class="cell-wrap">

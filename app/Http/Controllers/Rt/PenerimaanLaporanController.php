@@ -41,7 +41,7 @@ class PenerimaanLaporanController extends Controller
                 'keterangan'          => $laporan->keterangan,
                 'status'              => $laporan->status,
                 'status_label'        => LaporanPaceklik::STATUS_LABELS[$laporan->status] ?? 'Tidak diketahui',
-                'tanggal_lapor'       => $laporan->created_at->toIso8601String(),
+                'tanggal_lapor'       => $laporan->tanggal_lapor->toIso8601String(),
             ],
         ], 201);
     }
