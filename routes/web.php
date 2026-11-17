@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Bpbd\DashboardController as BpbdDashboardController;
 use App\Http\Controllers\Bpbd\PenetapanBantuanController;
+use App\Http\Controllers\Bpbd\PetaKrisisController;
 use App\Http\Controllers\Rt\DashboardController as RtDashboardController;
 use App\Http\Controllers\Rt\LaporanController;
 use App\Http\Controllers\Rt\PenerimaanLaporanController;
@@ -31,7 +32,8 @@ Route::middleware(['auth', EnsureRole::class . ':bpbd'])
     ->name('bpbd.')
     ->group(function () {
         Route::get('/', [BpbdDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/laporan', [PenetapanBantuanController::class, 'index'])->name('laporan.index');        
+        Route::get('/laporan', [PenetapanBantuanController::class, 'index'])->name('laporan.index');   
+        Route::get('/peta', [PetaKrisisController::class, 'index'])->name('peta.index');     
         Route::post('/penetapan', [PenetapanBantuanController::class, 'store'])->name('penetapan.store');   
     });
 

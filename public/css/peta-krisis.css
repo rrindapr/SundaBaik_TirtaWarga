@@ -1,0 +1,30 @@
+/* PBI-16: peta dasar. Memakai variabel dari tirtawarga.css */
+.peta-card { position: relative; margin-top: 30px; overflow: hidden; }
+
+#petaKrisis {
+    height: calc(100vh - 230px);
+    min-height: 440px;
+    width: 100%;
+    position: relative;
+    z-index: 0; /* isolasi z-index Leaflet agar tidak menimpa dialog/sidebar */
+    background: var(--chip);
+}
+
+.leaflet-container { font-family: var(--font); }
+
+.peta-fallback {
+    position: absolute; inset: 0; z-index: 5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; padding: 32px; text-align: center;
+    background: var(--chip); color: var(--ink-2);
+}
+.peta-fallback[hidden] { display: none; }
+.peta-fallback strong { color: var(--ink); font-size: 17px; }
+
+.peta-reset {
+    display: block; padding: 6px 10px;
+    background: #fff; color: var(--ink); border: 0; cursor: pointer;
+    font-family: var(--font); font-size: 12px; font-weight: 700;
+    border-radius: 4px; box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
+}
+.peta-reset:hover { background: var(--chip); }
