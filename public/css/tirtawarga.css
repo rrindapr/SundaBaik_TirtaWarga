@@ -315,3 +315,8 @@ table.data tr.row-selected td { background: var(--st-ver-bg); }
     .dialog-summary { grid-template-columns: 1fr; }
     .dialog-summary > div + div { border-top: 1px solid var(--line); }
 }
+
+.forward-note { display: flex; align-items: center; gap: 14px; margin-top: 24px; padding: 14px 18px; border-radius: 12px; background: var(--st-ver-bg); color: var(--st-ver-ink); }
+.forward-note .ico { width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; background: var(--surface); display: grid; place-items: center; color: var(--brand); }
+.forward-note strong { display: block; font-size: 15px; color: var(--ink); }
+.forward-note small { display: block; margin-top: 2px; font-size: 13px; color: var(--ink-2); }

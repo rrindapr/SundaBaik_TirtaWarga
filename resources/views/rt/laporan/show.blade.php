@@ -14,6 +14,10 @@
             ['title' => 'Diverifikasi BPBD', 'time' => $report->diverifikasi_at],
             ['title' => 'Bantuan selesai',   'time' => $report->selesai_at],
         ];
+
+        // PBI-12: bukti laporan sudah diteruskan ke BPBD, diambil dari catatan pertama log status (PBI-34).
+        $forwardLog = $report->logStatus->first(fn ($log) => $log->status_lama === null);
+        $forwardedAt = $forwardLog?->created_at ?? $report->created_at;
     @endphp
 
     <a href="{{ route('rt.laporan.index') }}" class="back-link">‹ Kembali ke Riwayat Laporan</a>
@@ -26,6 +30,14 @@
         <span class="pill {{ $statusClasses[$report->status] ?? '' }}">
             {{ $statusLabels[$report->status] ?? 'Tidak diketahui' }}
         </span>
+    </div>
+
+    <div class="forward-note">
+        <span class="ico">@include('partials.icon', ['name' => 'send'])</span>
+        <div>
+            <strong>Laporan telah diteruskan ke BPBD</strong>
+            <small>Masuk ke daftar Laporan Masuk BPBD pada <span class="mono">{{ $forwardedAt->format('d/m/Y H.i') }}</span>.</small>
+        </div>
     </div>
 
     <section class="section">
