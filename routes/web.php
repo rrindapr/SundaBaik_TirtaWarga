@@ -5,6 +5,7 @@ use App\Http\Controllers\Bpbd\DashboardController as BpbdDashboardController;
 use App\Http\Controllers\Bpbd\PenetapanBantuanController;
 use App\Http\Controllers\Rt\DashboardController as RtDashboardController;
 use App\Http\Controllers\Rt\LaporanController;
+use App\Http\Controllers\Rt\PenerimaanLaporanController;
 use App\Http\Middleware\EnsureRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,5 +43,6 @@ Route::middleware(['auth', EnsureRole::class . ':rt'])
         Route::get('/', [RtDashboardController::class, 'index'])->name('dashboard');
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');                
         Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
+        Route::post('/laporan/terima', [PenerimaanLaporanController::class, 'store'])->name('laporan.terima');
         Route::get('/laporan/{laporan:kode}', [LaporanController::class, 'show'])->name('laporan.show');   
     });
