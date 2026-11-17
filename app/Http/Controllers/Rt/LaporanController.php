@@ -25,11 +25,7 @@ class LaporanController extends Controller
         return view('rt.laporan.index', compact('reports'));
     }
 
-    /**
-     * PBI-05: detail satu laporan.
-     * Ketua RT hanya boleh membuka laporan miliknya sendiri.
-     * Laporan milik RT lain dianggap tidak ada (404).
-     */
+    //Ketua RT hanya boleh membuka laporan miliknya sendiri
     public function show(Request $request, LaporanPaceklik $laporan)
     {
         abort_unless((int) $laporan->user_id === (int) $request->user()->id, 404);

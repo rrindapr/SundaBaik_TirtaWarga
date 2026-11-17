@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-// PBI-34: tabel log_status_laporan
+//tabel log_status_laporan
 class LogStatusLaporan extends Model
 {
     protected $table = 'log_status_laporan';

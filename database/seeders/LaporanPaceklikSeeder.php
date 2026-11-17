@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\LaporanPaceklik;
+use App\Models\LogStatusLaporan;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
@@ -55,6 +56,12 @@ class LaporanPaceklikSeeder extends Seeder
                 'diverifikasi_at' => $data['status'] >= 2 ? $reportedAt->copy()->addHours(11) : null,
                 'selesai_at'      => $data['status'] >= 3 ? $reportedAt->copy()->addDay() : null,
             ])->save();
+
+            // catatan "Laporan dikirim" di log status,
+            // supaya waktu "diteruskan ke BPBD" di halaman detail tidak memakai waktu seeding.
+            LogStatusLaporan::where('laporan_id', $laporan->id)
+                ->whereNull('status_lama')
+                ->update(['created_at' => $reportedAt, 'updated_at' => $reportedAt]);
         }
     }
 }
