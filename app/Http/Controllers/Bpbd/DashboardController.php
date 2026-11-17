@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Bpbd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use App\Models\LaporanPaceklik;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        // 1. Data Statistik dari Teman Kelompok
         $mainStats = [
             ['label' => 'Total laporan',           'value' => '48',        'change' => '+20%', 'isGood' => true],
             ['label' => 'Warga terdampak',         'value' => '1.284 KK',  'change' => '+12%', 'isGood' => false],
@@ -47,8 +50,39 @@ class DashboardController extends Controller
 
         $chartMax = 10;
 
+        // 2. Data Laporan Tugas Rinda (PBI-13) - Dibuat aman dari error kolom
+        $daftarLaporan = collect([]);
+
+        if (class_exists(LaporanPaceklik::class) && Schema::hasTable('laporan_paceklik')) {
+            $query = LaporanPaceklik::query();
+
+            // Cek jika relasi penetapan ada
+            if (method_exists(LaporanPaceklik::class, 'penetapanAktif')) {
+                $query->with('penetapanAktif');
+            }
+
+            // Hanya urutkan berdasarkan tingkat_keparahan JIKA kolomnya sudah ada
+            if (Schema::hasColumn('laporan_paceklik', 'tingkat_keparahan')) {
+                $query->orderByRaw("
+                    CASE tingkat_keparahan
+                        WHEN 'Kritis' THEN 1
+                        WHEN 'Sedang' THEN 2
+                        WHEN 'Rendah' THEN 3
+                        ELSE 4
+                    END ASC
+                ");
+            }
+
+            // Urutkan data dari yang paling baru
+            $daftarLaporan = $query->orderBy('created_at', 'desc')->get();
+        }
+
+        $petugasAktif = auth()->user()->name ?? 'Marpaung Rinda Puspa Rani';
+
+        // 3. Kirim ke view
         return view('bpbd.dashboard', compact(
-            'mainStats', 'statusStats', 'weeklyChart', 'areas', 'totalAffected', 'chartMax'
+            'mainStats', 'statusStats', 'weeklyChart', 'areas', 'totalAffected', 'chartMax',
+            'daftarLaporan', 'petugasAktif'
         ));
     }
 }
