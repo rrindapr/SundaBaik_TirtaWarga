@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Bpbd\DashboardController as BpbdDashboardController;
+use App\Http\Controllers\Bpbd\PenetapanBantuanController;
 use App\Http\Controllers\Rt\DashboardController as RtDashboardController;
 use App\Http\Controllers\Rt\LaporanController;
 use App\Http\Middleware\EnsureRole;
@@ -29,6 +30,8 @@ Route::middleware(['auth', EnsureRole::class . ':bpbd'])
     ->name('bpbd.')
     ->group(function () {
         Route::get('/', [BpbdDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/laporan', [PenetapanBantuanController::class, 'index'])->name('laporan.index');        
+        Route::post('/penetapan', [PenetapanBantuanController::class, 'store'])->name('penetapan.store');   
     });
 
 // RT (hanya akun dengan role rt)
@@ -37,7 +40,7 @@ Route::middleware(['auth', EnsureRole::class . ':rt'])
     ->name('rt.')
     ->group(function () {
         Route::get('/', [RtDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');                // PBI-04
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');                
         Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
-        Route::get('/laporan/{laporan:kode}', [LaporanController::class, 'show'])->name('laporan.show');   // PBI-05
+        Route::get('/laporan/{laporan:kode}', [LaporanController::class, 'show'])->name('laporan.show');   
     });

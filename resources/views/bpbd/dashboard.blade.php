@@ -12,7 +12,7 @@
 
     <nav class="tabs">
         <a href="#" class="active">Ringkasan</a>
-        <a href="#">Laporan Masuk</a>
+        <a href="{{ route('bpbd.laporan.index') }}">Laporan Masuk</a>
         <a href="#">Peta Krisis</a>
         <a href="#">Penetapan</a>
     </nav>

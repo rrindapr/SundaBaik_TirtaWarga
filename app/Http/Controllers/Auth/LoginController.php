@@ -30,7 +30,7 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    /** Proses login. */
+    //login proses
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate(
@@ -66,7 +66,7 @@ class LoginController extends Controller
         return redirect($url);
     }
 
-    /** Proses logout. */
+    //logout proses
     public function logout(Request $request): RedirectResponse
     {
         $this->signOut($request);
