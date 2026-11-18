@@ -94,6 +94,7 @@
                         <th>Alokasi &amp; Jadwal</th>
                         <th>Petugas BPBD</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,7 +106,7 @@
                         <tr id="penetapan-{{ $penetapan->id }}">
                             <td>
                                 <div class="cell-stack">
-                                    <strong class="mono">{{ $penetapan->nomor_surat_tugas }}</strong>
+                                    <a href="{{ route('bpbd.penetapan.show', $penetapan) }}" class="link-strong mono">{{ $penetapan->nomor_surat_tugas }}</a>
                                     {{-- tanggal penetapan = waktu record penetapan dibuat --}}
                                     <small class="mono">Ditetapkan {{ $penetapan->created_at->format('d/m/Y H.i') }}</small>
                                 </div>
@@ -133,6 +134,7 @@
                                     {{ $penetapan->status_bantuan }}
                                 </span>
                             </td>
+                            <td><a href="{{ route('bpbd.penetapan.show', $penetapan) }}" class="link">Lihat detail ›</a></td>
                         </tr>
                     @endforeach
                 </tbody>

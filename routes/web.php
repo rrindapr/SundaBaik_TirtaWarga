@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Bpbd\DaftarPenetapanController;
 use App\Http\Controllers\Bpbd\DashboardController as BpbdDashboardController;
+use App\Http\Controllers\Bpbd\DetailPenetapanController;
 use App\Http\Controllers\Bpbd\PenetapanBantuanController;
 use App\Http\Controllers\Bpbd\PetaKrisisController;
 use App\Http\Controllers\Rt\DashboardController as RtDashboardController;
@@ -36,7 +37,8 @@ Route::middleware(['auth', EnsureRole::class . ':bpbd'])
         Route::get('/laporan', [PenetapanBantuanController::class, 'index'])->name('laporan.index');   
         Route::get('/peta', [PetaKrisisController::class, 'index'])->name('peta.index');     
         Route::post('/penetapan', [PenetapanBantuanController::class, 'store'])->name('penetapan.store');
-        Route::get('/penetapan', [DaftarPenetapanController::class, 'index'])->name('penetapan.index');   
+        Route::get('/penetapan', [DaftarPenetapanController::class, 'index'])->name('penetapan.index');
+        Route::get('/penetapan/{penetapan}', [DetailPenetapanController::class, 'show'])->whereNumber('penetapan')->name('penetapan.show');   
     });
 
 // RT (hanya akun dengan role rt)
