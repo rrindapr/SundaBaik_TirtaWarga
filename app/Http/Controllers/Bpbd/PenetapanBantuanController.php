@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 class PenetapanBantuanController extends Controller
@@ -41,6 +42,10 @@ class PenetapanBantuanController extends Controller
             'alokasi_tangki_liter' => 'required|integer|min:1000',
             'jadwal_distribusi'    => 'required|date|after_or_equal:today',
             'catatan_verifikasi'   => 'nullable|string|max:1000',
+            // PBI-21: kalau dikirim, petugas wajib sudah mencentang konfirmasi (true / 1 / "yes" / "on").
+            'konfirmasi'           => 'sometimes|accepted',
+        ], [
+            'konfirmasi.accepted'  => 'Penetapan belum dikonfirmasi. Centang pernyataan konfirmasi terlebih dahulu.',
         ]);
 
         $laporan = LaporanPaceklik::findOrFail($validated['laporan_id']);
@@ -90,6 +95,15 @@ class PenetapanBantuanController extends Controller
                 'kode_laporan'      => $laporan->kode,
                 'nomor_surat_tugas' => $penetapan->nomor_surat_tugas,
                 'status_baru'       => 'Ditetapkan',
+                // PBI-21: data bukti konfirmasi penetapan yang ditampilkan setelah berhasil disimpan
+                'penetapan_id'         => $penetapan->id,
+                'alamat'               => $laporan->alamat,
+                'jumlah_kk_terdampak'  => $laporan->jumlah_kk_terdampak,
+                'alokasi_tangki_liter' => (int) $penetapan->alokasi_tangki_liter,
+                'jadwal_distribusi'    => date('d/m/Y', strtotime($penetapan->jadwal_distribusi)),
+                'petugas_bpbd'         => $penetapan->petugas_bpbd,
+                'tanggal_penetapan'    => $penetapan->created_at->format('d/m/Y H.i'),
+                'detail_url'           => Route::has('bpbd.penetapan.show') ? route('bpbd.penetapan.show', $penetapan) : null,
             ],
         ], 201);
     }
