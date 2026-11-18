@@ -1,0 +1,13 @@
+/* PBI-23: Detail wilayah terpilih penerima bantuan (BPBD) */
+.pill.pill-lg { font-size: 14px; padding: 7px 14px; }
+
+.detail-coord { font-size: 13px; color: var(--muted); }
+.detail-peta { height: 320px; overflow: hidden; }
+.detail-peta-kosong { padding: 18px 20px; border: 1.5px dashed var(--line); border-radius: 12px; color: var(--muted); font-size: 14px; }
+
+.detail-log { list-style: none; margin: 18px 0 0; padding: 4px 22px; }
+.detail-log li { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+.detail-log li:last-child { border-bottom: 0; }
+.detail-log .pill { min-width: 96px; text-align: center; }
+.detail-log strong { display: block; font-size: 14px; }
+.detail-log small { color: var(--muted); font-size: 12px; }
