@@ -17,15 +17,15 @@
 
     $menu = $isBpbd
         ? [
-            ['label' => 'Ringkasan',             'route' => 'bpbd.dashboard',     'icon' => 'grid'],
-                        ['label' => 'Laporan Masuk',         'route' => 'bpbd.laporan.index', 'icon' => 'inbox', 'badge' => $incomingReportCount ?? 0],
-           ['label' => 'Peta Krisis',           'route' => 'bpbd.peta.index',    'icon' => 'map'],
-            ['label' => 'Penetapan Bantuan',     'route' => null,                 'icon' => 'flag'],
-            ['label' => 'Verifikasi Pengiriman', 'route' => null,                 'icon' => 'check'],
+            ['label' => 'Ringkasan',             'route' => 'bpbd.dashboard',      'icon' => 'grid'],
+            ['label' => 'Laporan Masuk',         'route' => 'bpbd.laporan.index',  'icon' => 'inbox', 'badge' => $incomingReportCount ?? 0],
+            ['label' => 'Peta Krisis',           'route' => 'bpbd.peta.index',     'icon' => 'map'],
+            ['label' => 'Penetapan Bantuan',     'route' => 'bpbd.penetapan.index','icon' => 'flag'],
+            ['label' => 'Verifikasi Pengiriman', 'route' => null,'icon' => 'check'],
         ]
         : [
             ['label' => 'Ringkasan',       'route' => 'rt.dashboard',     'icon' => 'grid'],
-            ['label' => 'Kirim Laporan',   'route' => 'rt.laporan.create', 'icon' => 'send'],
+            ['label' => 'Kirim Laporan',   'route' => 'rt.laporan.create','icon' => 'send'],
             ['label' => 'Riwayat Laporan', 'route' => 'rt.laporan.index', 'icon' => 'list', 'active' => ['rt.laporan.index', 'rt.laporan.show']],
             ['label' => 'Notifikasi',      'route' => null,               'icon' => 'bell', 'badge' => 2],
         ];

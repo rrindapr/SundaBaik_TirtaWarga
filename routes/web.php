@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Bpbd\DaftarPenetapanController;
 use App\Http\Controllers\Bpbd\DashboardController as BpbdDashboardController;
 use App\Http\Controllers\Bpbd\PenetapanBantuanController;
 use App\Http\Controllers\Bpbd\PetaKrisisController;
@@ -34,7 +35,8 @@ Route::middleware(['auth', EnsureRole::class . ':bpbd'])
         Route::get('/', [BpbdDashboardController::class, 'index'])->name('dashboard');
         Route::get('/laporan', [PenetapanBantuanController::class, 'index'])->name('laporan.index');   
         Route::get('/peta', [PetaKrisisController::class, 'index'])->name('peta.index');     
-        Route::post('/penetapan', [PenetapanBantuanController::class, 'store'])->name('penetapan.store');   
+        Route::post('/penetapan', [PenetapanBantuanController::class, 'store'])->name('penetapan.store');
+        Route::get('/penetapan', [DaftarPenetapanController::class, 'index'])->name('penetapan.index');   
     });
 
 // RT (hanya akun dengan role rt)
