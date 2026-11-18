@@ -104,7 +104,7 @@
 
     {{-- PBI-20: dialog konfirmasi penetapan wilayah penerima bantuan --}}
     <dialog id="assignDialog" class="dialog" aria-labelledby="assignDialogTitle">
-        <form id="assignForm" onsubmit="submitAssignment(event)">
+        <form id="assignForm" onsubmit="bukaKonfirmasiPenetapan(event)">
             <div class="dialog-head">
                 <div>
                     <h2 id="assignDialogTitle">Tetapkan penerima bantuan</h2>
@@ -150,11 +150,12 @@
 
             <div class="dialog-foot">
                 <button type="button" class="btn-ghost" onclick="closeAssignDialog()">Batal</button>
-                <button type="submit" class="btn-primary" id="assignSubmit">@include('partials.icon', ['name' => 'check']) Simpan &amp; tetapkan</button>
+                <button type="submit" class="btn-primary" id="assignSubmit">@include('partials.icon', ['name' => 'check']) Lanjut ke konfirmasi</button>
             </div>
         </form>
     </dialog>
-
+        {{-- PBI-21: dialog konfirmasi penetapan dan bukti penetapan --}}
+    @include('bpbd.laporan.partials.konfirmasi-penetapan')
     <script>
         const assignDialog = document.getElementById('assignDialog');
         let selectedRow = null;
@@ -217,6 +218,7 @@
                         alokasi_tangki_liter: parseInt(document.getElementById('waterAllocation').value, 10),
                         jadwal_distribusi: document.getElementById('distributionDate').value,
                         catatan_verifikasi: document.getElementById('verificationNote').value,
+                        konfirmasi: true, // PBI-21: hanya terkirim setelah petugas mengonfirmasi
                     }),
                 });
 
@@ -225,6 +227,7 @@
                 if (response.ok && result.success) {
                     showAlert('ok', result.message + ' Nomor surat tugas: ' + result.data.nomor_surat_tugas + '.');
                     markRowAssigned(reportId);
+                    tampilkanBuktiPenetapan(result.data); // PBI-21
                     document.getElementById('assignForm').reset();
                 } else {
                     const firstError = result.errors ? Object.values(result.errors)[0][0] : null;
